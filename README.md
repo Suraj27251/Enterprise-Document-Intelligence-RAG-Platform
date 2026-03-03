@@ -138,7 +138,7 @@ uvicorn app.main:app --host 0.0.0.0 --port $PORT
 ```
 
 After deploy, open these URLs on your Render domain:
-- `/` → API status message
+- `/` → human-friendly landing page with quick links
 - `/health` → healthcheck
 - `/version` → shows deployed commit SHA (`RENDER_GIT_COMMIT`)
 - `/docs` → interactive Swagger UI

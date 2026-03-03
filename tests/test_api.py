@@ -35,9 +35,9 @@ def test_search_with_auth(monkeypatch, client) -> None:
 def test_root_route(client) -> None:
     response = client.get("/")
     assert response.status_code == 200
-    body = response.json()
-    assert body["docs"] == "/docs"
-    assert body["health"] == "/health"
+    assert "text/html" in response.headers["content-type"]
+    assert "Enterprise Document Intelligence API" in response.text
+    assert '/docs' in response.text
 
 
 def test_version_route(client) -> None:

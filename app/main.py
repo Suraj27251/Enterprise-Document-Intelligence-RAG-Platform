@@ -9,7 +9,7 @@ import sentry_sdk
 from fastapi import FastAPI, Request
 from fastapi.exceptions import HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 
 from app.api.endpoints import router
 from app.core.config import get_settings
@@ -46,16 +46,25 @@ def healthcheck() -> dict[str, str]:
     return {"status": "ok"}
 
 
-@app.get("/")
-def root() -> dict[str, str]:
-    """Human-friendly root route for hosted environments (Render, etc.)."""
+@app.get("/", response_class=HTMLResponse)
+def root() -> str:
+    """Human-friendly root page for hosted environments (Render, etc.)."""
 
-    return {
-        "message": "Enterprise Document Intelligence API is running.",
-        "docs": "/docs",
-        "health": "/health",
-        "api_base": "/api/v1",
-    }
+    return """
+    <html>
+      <head><title>Enterprise Document Intelligence API</title></head>
+      <body style="font-family: Arial, sans-serif; padding: 24px;">
+        <h1>Enterprise Document Intelligence API</h1>
+        <p>The service is up and running.</p>
+        <ul>
+          <li><a href="/docs">API docs</a></li>
+          <li><a href="/health">Health check</a></li>
+          <li><a href="/version">Deployment version</a></li>
+        </ul>
+        <p>Base API path: <code>/api/v1</code></p>
+      </body>
+    </html>
+    """
 
 
 @app.get("/version")
