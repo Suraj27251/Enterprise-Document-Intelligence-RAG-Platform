@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: enterprise-doc-intelligence
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./data/raw_documents:/app/data/raw_documents
+      - ./embeddings/vector_store:/app/embeddings/vector_store
+
+volumes:
+  vector_store:
