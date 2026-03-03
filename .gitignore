@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.pytest_cache/
+*.faiss
+embeddings/vector_store/*
+!embeddings/vector_store/.gitkeep
+data/raw_documents/*
+!data/raw_documents/.gitkeep
