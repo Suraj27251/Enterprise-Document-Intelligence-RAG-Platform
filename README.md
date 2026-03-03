@@ -137,6 +137,22 @@ pip install -r requirements.txt
 uvicorn app.main:app --host 0.0.0.0 --port $PORT
 ```
 
+After deploy, open these URLs on your Render domain:
+- `/` → API status message
+- `/health` → healthcheck
+- `/version` → shows deployed commit SHA (`RENDER_GIT_COMMIT`)
+- `/docs` → interactive Swagger UI
+- `/api/v1/search?query=...` → authenticated search endpoint
+
+### If you still see `{"detail":"Not Found"}` at `/`
+
+That means Render is almost certainly serving an older revision.
+
+1. In Render dashboard, open your service and click **Manual Deploy → Deploy latest commit**.
+2. If still stale, use **Clear build cache & deploy**.
+3. Confirm startup logs mention the new commit and `Application booted with commit=...`.
+4. Open `/version` and verify the commit hash matches your latest GitHub commit.
+
 ### If you saw dependency resolution errors
 
 Your previous failure was due to a pin conflict: `langchain==0.3.9` requires `numpy<2`, while the repo pinned `numpy==2.2.0`.

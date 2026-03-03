@@ -30,3 +30,27 @@ def test_search_with_auth(monkeypatch, client) -> None:
 
     assert response.status_code == 200
     assert response.json()["answer"] == "ok"
+
+
+def test_root_route(client) -> None:
+    response = client.get("/")
+    assert response.status_code == 200
+    body = response.json()
+    assert body["docs"] == "/docs"
+    assert body["health"] == "/health"
+
+
+def test_version_route(client) -> None:
+    response = client.get("/version")
+    assert response.status_code == 200
+    payload = response.json()
+    assert "commit" in payload
+    assert "service" in payload
+
+
+def test_404_payload_includes_links(client) -> None:
+    response = client.get("/does-not-exist")
+    assert response.status_code == 404
+    payload = response.json()
+    assert payload["docs"] == "/docs"
+    assert payload["version"] == "/version"
