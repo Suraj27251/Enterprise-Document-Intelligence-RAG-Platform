@@ -122,6 +122,26 @@ docker compose up --build
 
 This starts the FastAPI app at `http://localhost:8000` with mounted data/vector directories.
 
+
+## Deploying on Render
+
+This repo includes a `render.yaml` Blueprint for one-click API deployment.
+
+1. Push this repository to GitHub.
+2. In Render, choose **New +** → **Blueprint** and select your repo.
+3. Set required secret env vars (`OPENAI_API_KEY`, optionally `SENTRY_DSN`).
+4. Deploy. Render will run:
+
+```bash
+pip install -r requirements.txt
+uvicorn app.main:app --host 0.0.0.0 --port $PORT
+```
+
+### If you saw dependency resolution errors
+
+Your previous failure was due to a pin conflict: `langchain==0.3.9` requires `numpy<2`, while the repo pinned `numpy==2.2.0`.
+This has been fixed by pinning `numpy==1.26.4`, which is compatible with both `langchain` and `faiss-cpu`.
+
 ## Running tests
 
 ```bash

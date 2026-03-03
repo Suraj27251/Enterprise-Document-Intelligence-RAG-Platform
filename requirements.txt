@@ -14,4 +14,4 @@ sentry-sdk==2.19.2
 requests==2.32.3
 pytest==8.3.4
 httpx==0.28.1
-numpy==2.2.0
+numpy==1.26.4
